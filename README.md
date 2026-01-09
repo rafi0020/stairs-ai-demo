@@ -2,7 +2,7 @@
 
 > **Interactive ML Pipeline Visualization for Staircase Safety Monitoring**
 
-[![Live Demo](https://img.shields.io/badge/Demo-Live-success?style=for-the-badge)](https://YOUR_USERNAME.github.io/stairs-ai-demo/)
+[![Live Demo](https://img.shields.io/badge/Demo-Live-success?style=for-the-badge)](https://rafi0020.github.io/stairs-ai-demo/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.2-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18-blue?style=for-the-badge&logo=react)](https://react.dev/)
