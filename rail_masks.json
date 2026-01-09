@@ -1,0 +1,22 @@
+{
+  "polygons": [
+    {
+      "id": "right_handrail",
+      "label": "Right Handrail",
+      "points": [
+        [1050, 180],
+        [1150, 180],
+        [1200, 350],
+        [1250, 550],
+        [1200, 720],
+        [1100, 720],
+        [1080, 550],
+        [1030, 350]
+      ],
+      "color": [0, 255, 0]
+    }
+  ],
+  "frame_width": 1280,
+  "frame_height": 720,
+  "description": "Rail mask polygons for the demo staircase video. Right-side handrail visible from behind subjects."
+}

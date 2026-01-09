@@ -1,0 +1,30 @@
+{
+  "source_video": "assets/preview.mp4",
+  "parameters": {
+    "yolo_model": "yolov8n.pt",
+    "yolo_conf": 0.5,
+    "phone_threshold": 0.05,
+    "min_state_duration_sec": 0.55,
+    "fps": 24,
+    "frame_width": 1280,
+    "frame_height": 720
+  },
+  "total_frames": 192,
+  "total_duration_sec": 8.0,
+  "persons_detected_count": 185,
+  "unique_tracks": 2,
+  "compliance_summary": {
+    "compliant_frames": 96,
+    "non_compliant_frames": 89,
+    "compliant_pct": 51.89,
+    "non_compliant_pct": 48.11
+  },
+  "phone_summary": {
+    "phone_detected_frames": 72,
+    "no_phone_frames": 120,
+    "phone_pct": 37.5
+  },
+  "events_count": 4,
+  "processing_time_sec": 12.34,
+  "generated_at": "2024-01-15T10:30:00Z"
+}

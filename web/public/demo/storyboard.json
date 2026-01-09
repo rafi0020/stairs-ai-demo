@@ -1,0 +1,51 @@
+{
+  "chapters": [
+    {
+      "id": "ch1",
+      "title": "Approach",
+      "timestamp_sec": 0.0,
+      "frame_number": 0,
+      "thumbnail_path": "storyboard/ch1_approach.svg",
+      "description": "Person approaches the staircase without holding the handrail. This triggers a non-compliant state immediately.",
+      "focus": "Initial detection and non-compliance"
+    },
+    {
+      "id": "ch2",
+      "title": "Grip Rail",
+      "timestamp_sec": 2.5,
+      "frame_number": 60,
+      "thumbnail_path": "storyboard/ch2_grip_rail.svg",
+      "description": "Person grabs the left handrail. After debounce period, state transitions to compliant.",
+      "focus": "Compliance detection via rail hit-test"
+    },
+    {
+      "id": "ch3",
+      "title": "Phone Usage",
+      "timestamp_sec": 4.0,
+      "frame_number": 96,
+      "thumbnail_path": "storyboard/ch3_phone_usage.svg",
+      "description": "While still holding the rail, person raises phone to ear. Phone heuristic triggers based on wrist-to-ear distance.",
+      "focus": "Phone detection heuristic"
+    },
+    {
+      "id": "ch4",
+      "title": "Release Rail",
+      "timestamp_sec": 6.0,
+      "frame_number": 144,
+      "thumbnail_path": "storyboard/ch4_release_rail.svg",
+      "description": "Person releases handrail while still on phone. Transitions back to non-compliant state.",
+      "focus": "State machine debounce"
+    },
+    {
+      "id": "ch5",
+      "title": "Exit",
+      "timestamp_sec": 7.5,
+      "frame_number": 180,
+      "thumbnail_path": "storyboard/ch5_exit.svg",
+      "description": "Person exits the staircase area. Final summary of detected events.",
+      "focus": "Event summary and export"
+    }
+  ],
+  "total_duration_sec": 8.0,
+  "generated_at": "2024-01-15T10:30:00Z"
+}

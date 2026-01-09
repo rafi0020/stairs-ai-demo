@@ -1,0 +1,74 @@
+[
+  {
+    "event_id": "evt_001",
+    "event_type": "non_compliant_start",
+    "timestamp_sec": 0.0,
+    "frame_number": 0,
+    "person_id": 1,
+    "old_state": ["unknown", "unknown"],
+    "new_state": ["non_compliant", "no_phone"],
+    "debounce_triggered": false,
+    "evidence_frame_path": "evidence_frames/frame_000000_non_compliant_start.svg",
+    "details": {
+      "compliance_status": "non_compliant",
+      "is_phone_talking": false,
+      "rail_left_hit": false,
+      "rail_right_hit": false,
+      "confidence": 0.87
+    }
+  },
+  {
+    "event_id": "evt_002",
+    "event_type": "compliant_start",
+    "timestamp_sec": 2.5,
+    "frame_number": 60,
+    "person_id": 1,
+    "old_state": ["non_compliant", "no_phone"],
+    "new_state": ["compliant", "no_phone"],
+    "debounce_triggered": true,
+    "evidence_frame_path": "evidence_frames/frame_000060_compliant_start.svg",
+    "details": {
+      "compliance_status": "compliant",
+      "is_phone_talking": false,
+      "rail_left_hit": true,
+      "rail_right_hit": false,
+      "confidence": 0.92
+    }
+  },
+  {
+    "event_id": "evt_003",
+    "event_type": "phone_detected",
+    "timestamp_sec": 4.0,
+    "frame_number": 96,
+    "person_id": 1,
+    "old_state": ["compliant", "no_phone"],
+    "new_state": ["compliant", "phone"],
+    "debounce_triggered": true,
+    "evidence_frame_path": "evidence_frames/frame_000096_phone_detected.svg",
+    "details": {
+      "compliance_status": "compliant",
+      "is_phone_talking": true,
+      "phone_distance": 0.032,
+      "threshold": 0.05,
+      "confidence": 0.89
+    }
+  },
+  {
+    "event_id": "evt_004",
+    "event_type": "non_compliant_start",
+    "timestamp_sec": 6.0,
+    "frame_number": 144,
+    "person_id": 1,
+    "old_state": ["compliant", "phone"],
+    "new_state": ["non_compliant", "phone"],
+    "debounce_triggered": true,
+    "evidence_frame_path": "evidence_frames/frame_000144_non_compliant_start.svg",
+    "details": {
+      "compliance_status": "non_compliant",
+      "is_phone_talking": true,
+      "rail_left_hit": false,
+      "rail_right_hit": false,
+      "confidence": 0.85
+    }
+  }
+]

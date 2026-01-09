@@ -1,0 +1,277 @@
+[
+  {
+    "frame_number": 0,
+    "timestamp_sec": 0.0,
+    "metrics": {
+      "total_persons": 1,
+      "compliant_count": 0,
+      "non_compliant_count": 1,
+      "phone_count": 0,
+      "avg_confidence": 0.87
+    },
+    "persons": [
+      {
+        "person_id": 1,
+        "track_id": 1,
+        "bbox": { "x": 420, "y": 180, "width": 180, "height": 420 },
+        "confidence": 0.87,
+        "pose": {
+          "landmarks": [
+            { "name": "nose", "x": 510, "y": 210, "z": 0, "visibility": 0.99 },
+            { "name": "left_shoulder", "x": 540, "y": 280, "z": 0, "visibility": 0.95 },
+            { "name": "right_shoulder", "x": 480, "y": 280, "z": 0, "visibility": 0.94 },
+            { "name": "left_wrist", "x": 560, "y": 400, "z": 0, "visibility": 0.88 },
+            { "name": "right_wrist", "x": 460, "y": 400, "z": 0, "visibility": 0.87 },
+            { "name": "left_ear", "x": 525, "y": 205, "z": 0, "visibility": 0.92 },
+            { "name": "right_ear", "x": 495, "y": 205, "z": 0, "visibility": 0.91 }
+          ]
+        },
+        "rail_hit_test": {
+          "left_wrist_in_left_rail": false,
+          "right_wrist_in_left_rail": false,
+          "left_wrist_in_right_rail": false,
+          "right_wrist_in_right_rail": false,
+          "any_hit": false
+        },
+        "phone_heuristic": {
+          "left_wrist_to_left_ear_dist": 0.245,
+          "left_wrist_to_right_ear_dist": 0.268,
+          "right_wrist_to_left_ear_dist": 0.312,
+          "right_wrist_to_right_ear_dist": 0.289,
+          "min_distance": 0.245,
+          "threshold": 0.05,
+          "is_phone_talking": false
+        },
+        "compliance_status": "non_compliant",
+        "crop_path": "crops/frame_000000_person_001.jpg"
+      }
+    ],
+    "state_machine": {
+      "current_state": ["non_compliant", "no_phone"],
+      "pending_state": null,
+      "time_in_pending": 0,
+      "debounce_threshold": 0.55
+    },
+    "annotated_frame_path": "annotated/frame_000000.jpg"
+  },
+  {
+    "frame_number": 60,
+    "timestamp_sec": 2.5,
+    "metrics": {
+      "total_persons": 1,
+      "compliant_count": 1,
+      "non_compliant_count": 0,
+      "phone_count": 0,
+      "avg_confidence": 0.92
+    },
+    "persons": [
+      {
+        "person_id": 1,
+        "track_id": 1,
+        "bbox": { "x": 380, "y": 220, "width": 200, "height": 400 },
+        "confidence": 0.92,
+        "pose": {
+          "landmarks": [
+            { "name": "nose", "x": 480, "y": 250, "z": 0, "visibility": 0.98 },
+            { "name": "left_shoulder", "x": 510, "y": 320, "z": 0, "visibility": 0.96 },
+            { "name": "right_shoulder", "x": 450, "y": 320, "z": 0, "visibility": 0.95 },
+            { "name": "left_wrist", "x": 320, "y": 380, "z": 0, "visibility": 0.91 },
+            { "name": "right_wrist", "x": 500, "y": 420, "z": 0, "visibility": 0.89 },
+            { "name": "left_ear", "x": 495, "y": 245, "z": 0, "visibility": 0.93 },
+            { "name": "right_ear", "x": 465, "y": 245, "z": 0, "visibility": 0.92 }
+          ]
+        },
+        "rail_hit_test": {
+          "left_wrist_in_left_rail": true,
+          "right_wrist_in_left_rail": false,
+          "left_wrist_in_right_rail": false,
+          "right_wrist_in_right_rail": false,
+          "any_hit": true
+        },
+        "phone_heuristic": {
+          "left_wrist_to_left_ear_dist": 0.312,
+          "left_wrist_to_right_ear_dist": 0.334,
+          "right_wrist_to_left_ear_dist": 0.285,
+          "right_wrist_to_right_ear_dist": 0.267,
+          "min_distance": 0.267,
+          "threshold": 0.05,
+          "is_phone_talking": false
+        },
+        "compliance_status": "compliant",
+        "crop_path": "crops/frame_000060_person_001.jpg"
+      }
+    ],
+    "state_machine": {
+      "current_state": ["compliant", "no_phone"],
+      "pending_state": null,
+      "time_in_pending": 0,
+      "debounce_threshold": 0.55
+    },
+    "annotated_frame_path": "annotated/frame_000060.jpg"
+  },
+  {
+    "frame_number": 96,
+    "timestamp_sec": 4.0,
+    "metrics": {
+      "total_persons": 1,
+      "compliant_count": 1,
+      "non_compliant_count": 0,
+      "phone_count": 1,
+      "avg_confidence": 0.89
+    },
+    "persons": [
+      {
+        "person_id": 1,
+        "track_id": 1,
+        "bbox": { "x": 360, "y": 260, "width": 220, "height": 380 },
+        "confidence": 0.89,
+        "pose": {
+          "landmarks": [
+            { "name": "nose", "x": 470, "y": 290, "z": 0, "visibility": 0.97 },
+            { "name": "left_shoulder", "x": 500, "y": 360, "z": 0, "visibility": 0.94 },
+            { "name": "right_shoulder", "x": 440, "y": 360, "z": 0, "visibility": 0.93 },
+            { "name": "left_wrist", "x": 300, "y": 420, "z": 0, "visibility": 0.90 },
+            { "name": "right_wrist", "x": 455, "y": 295, "z": 0, "visibility": 0.88 },
+            { "name": "left_ear", "x": 485, "y": 285, "z": 0, "visibility": 0.91 },
+            { "name": "right_ear", "x": 455, "y": 285, "z": 0, "visibility": 0.90 }
+          ]
+        },
+        "rail_hit_test": {
+          "left_wrist_in_left_rail": true,
+          "right_wrist_in_left_rail": false,
+          "left_wrist_in_right_rail": false,
+          "right_wrist_in_right_rail": false,
+          "any_hit": true
+        },
+        "phone_heuristic": {
+          "left_wrist_to_left_ear_dist": 0.298,
+          "left_wrist_to_right_ear_dist": 0.312,
+          "right_wrist_to_left_ear_dist": 0.042,
+          "right_wrist_to_right_ear_dist": 0.032,
+          "min_distance": 0.032,
+          "threshold": 0.05,
+          "is_phone_talking": true
+        },
+        "compliance_status": "compliant",
+        "crop_path": "crops/frame_000096_person_001.jpg"
+      }
+    ],
+    "state_machine": {
+      "current_state": ["compliant", "phone"],
+      "pending_state": null,
+      "time_in_pending": 0,
+      "debounce_threshold": 0.55
+    },
+    "annotated_frame_path": "annotated/frame_000096.jpg"
+  },
+  {
+    "frame_number": 144,
+    "timestamp_sec": 6.0,
+    "metrics": {
+      "total_persons": 1,
+      "compliant_count": 0,
+      "non_compliant_count": 1,
+      "phone_count": 1,
+      "avg_confidence": 0.85
+    },
+    "persons": [
+      {
+        "person_id": 1,
+        "track_id": 1,
+        "bbox": { "x": 340, "y": 300, "width": 240, "height": 360 },
+        "confidence": 0.85,
+        "pose": {
+          "landmarks": [
+            { "name": "nose", "x": 460, "y": 330, "z": 0, "visibility": 0.96 },
+            { "name": "left_shoulder", "x": 490, "y": 400, "z": 0, "visibility": 0.92 },
+            { "name": "right_shoulder", "x": 430, "y": 400, "z": 0, "visibility": 0.91 },
+            { "name": "left_wrist", "x": 520, "y": 480, "z": 0, "visibility": 0.86 },
+            { "name": "right_wrist", "x": 445, "y": 335, "z": 0, "visibility": 0.84 },
+            { "name": "left_ear", "x": 475, "y": 325, "z": 0, "visibility": 0.89 },
+            { "name": "right_ear", "x": 445, "y": 325, "z": 0, "visibility": 0.88 }
+          ]
+        },
+        "rail_hit_test": {
+          "left_wrist_in_left_rail": false,
+          "right_wrist_in_left_rail": false,
+          "left_wrist_in_right_rail": false,
+          "right_wrist_in_right_rail": false,
+          "any_hit": false
+        },
+        "phone_heuristic": {
+          "left_wrist_to_left_ear_dist": 0.245,
+          "left_wrist_to_right_ear_dist": 0.267,
+          "right_wrist_to_left_ear_dist": 0.038,
+          "right_wrist_to_right_ear_dist": 0.028,
+          "min_distance": 0.028,
+          "threshold": 0.05,
+          "is_phone_talking": true
+        },
+        "compliance_status": "non_compliant",
+        "crop_path": "crops/frame_000144_person_001.jpg"
+      }
+    ],
+    "state_machine": {
+      "current_state": ["non_compliant", "phone"],
+      "pending_state": null,
+      "time_in_pending": 0,
+      "debounce_threshold": 0.55
+    },
+    "annotated_frame_path": "annotated/frame_000144.jpg"
+  },
+  {
+    "frame_number": 180,
+    "timestamp_sec": 7.5,
+    "metrics": {
+      "total_persons": 1,
+      "compliant_count": 0,
+      "non_compliant_count": 1,
+      "phone_count": 0,
+      "avg_confidence": 0.78
+    },
+    "persons": [
+      {
+        "person_id": 1,
+        "track_id": 1,
+        "bbox": { "x": 320, "y": 340, "width": 260, "height": 340 },
+        "confidence": 0.78,
+        "pose": {
+          "landmarks": [
+            { "name": "nose", "x": 450, "y": 370, "z": 0, "visibility": 0.94 },
+            { "name": "left_shoulder", "x": 480, "y": 440, "z": 0, "visibility": 0.88 },
+            { "name": "right_shoulder", "x": 420, "y": 440, "z": 0, "visibility": 0.87 },
+            { "name": "left_wrist", "x": 510, "y": 520, "z": 0, "visibility": 0.82 },
+            { "name": "right_wrist", "x": 390, "y": 520, "z": 0, "visibility": 0.80 },
+            { "name": "left_ear", "x": 465, "y": 365, "z": 0, "visibility": 0.85 },
+            { "name": "right_ear", "x": 435, "y": 365, "z": 0, "visibility": 0.84 }
+          ]
+        },
+        "rail_hit_test": {
+          "left_wrist_in_left_rail": false,
+          "right_wrist_in_left_rail": false,
+          "left_wrist_in_right_rail": false,
+          "right_wrist_in_right_rail": false,
+          "any_hit": false
+        },
+        "phone_heuristic": {
+          "left_wrist_to_left_ear_dist": 0.278,
+          "left_wrist_to_right_ear_dist": 0.295,
+          "right_wrist_to_left_ear_dist": 0.312,
+          "right_wrist_to_right_ear_dist": 0.298,
+          "min_distance": 0.278,
+          "threshold": 0.05,
+          "is_phone_talking": false
+        },
+        "compliance_status": "non_compliant",
+        "crop_path": "crops/frame_000180_person_001.jpg"
+      }
+    ],
+    "state_machine": {
+      "current_state": ["non_compliant", "no_phone"],
+      "pending_state": null,
+      "time_in_pending": 0,
+      "debounce_threshold": 0.55
+    },
+    "annotated_frame_path": "annotated/frame_000180.jpg"
+  }
+]
