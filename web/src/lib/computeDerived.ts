@@ -5,7 +5,7 @@
  * re-running ML inference, using pre-computed intermediate data.
  */
 
-import type { FramePacket, Event } from './types';
+import type { FramePacket } from './types';
 
 // Default tuning parameters
 export const DEFAULT_PHONE_THRESHOLD = 0.05;
@@ -136,13 +136,10 @@ export function simulateDebounce(
     if (rawPhone === 'phone') phoneFrames++;
 
     // State machine logic
-    let commitEvent = false;
-    
     if (stableState[0] === 'unknown' && stableState[1] === 'unknown') {
       // First valid state becomes stable immediately
       if (rawCompliance !== 'unknown') {
         stableState = rawState;
-        commitEvent = true;
       }
     } else if (rawState[0] !== stableState[0] || rawState[1] !== stableState[1]) {
       // State changed
