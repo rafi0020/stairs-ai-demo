@@ -13,9 +13,12 @@ import {
   Play, Pause, RotateCcw, Eye, EyeOff,
   User, Hand, Phone, Shield, ShieldOff, AlertTriangle,
   Activity, Clock, Video, Monitor, Cpu,
-  Scan, Move, Target, GitBranch, FileOutput
+  Scan, Move, Target, GitBranch, FileOutput, X
 } from 'lucide-react';
 import type { DemoData, FramePacket, PersonAnalysis } from '../lib/types';
+import EventTimeline from '../components/EventTimeline';
+import PersonCropStrip from '../components/PersonCropStrip';
+import FrameViewer from '../components/FrameViewer';
 
 interface InteractiveDemoProps {
   demoData: DemoData | null;
@@ -125,6 +128,7 @@ export default function InteractiveDemo({ demoData }: InteractiveDemoProps) {
   const [activeStage, setActiveStage] = useState(0);
   const [hoveredStage, setHoveredStage] = useState<number | null>(null);
   const [videoAvailable, setVideoAvailable] = useState(false);
+  const [selectedEventIndex, setSelectedEventIndex] = useState<number | null>(null);
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const animationRef = useRef<number | null>(null);
@@ -273,9 +277,46 @@ export default function InteractiveDemo({ demoData }: InteractiveDemoProps) {
     return `${s}.${ms.toString().padStart(2, '0')}s`;
   };
   
-  // Get persons from current packet
-  const persons = currentPacket?.persons || [];
-  const metrics = currentPacket?.metrics;
+  // Get current phase based on time (for simulation mode)
+  const currentPhase = Math.floor(currentTime / 2.5) % 4;
+  const simIsTouchingRail = currentPhase === 1 || currentPhase === 2;
+  const simHasPhone = currentPhase === 2 || currentPhase === 3;
+  const simIsCompliant = simIsTouchingRail && !simHasPhone;
+  
+  // Create simulated persons when no real data is available
+  const simulatedPersons: PersonAnalysis[] = currentTime > 0 ? [{
+    person_id: 1,
+    bbox: { x: 100, y: 80, width: 160, height: 200 },
+    confidence: 0.87,
+    pose: { landmarks: [] },
+    rail_hit_test: {
+      left_wrist_in_left_rail: simIsTouchingRail,
+      right_wrist_in_left_rail: false,
+      left_wrist_in_right_rail: false,
+      right_wrist_in_right_rail: false,
+      any_hit: simIsTouchingRail
+    },
+    phone_heuristic: {
+      left_wrist_to_left_ear_dist: 0.5,
+      left_wrist_to_right_ear_dist: 0.5,
+      right_wrist_to_left_ear_dist: simHasPhone ? 0.03 : 0.5,
+      right_wrist_to_right_ear_dist: simHasPhone ? 0.03 : 0.5,
+      min_distance: simHasPhone ? 0.03 : 0.5,
+      threshold: 0.05,
+      is_phone_talking: simHasPhone
+    },
+    compliance_status: simIsCompliant ? 'compliant' : 'non_compliant'
+  }] : [];
+  
+  // Get persons from current packet, fallback to simulated data
+  const realPersons = currentPacket?.persons || [];
+  const persons = realPersons.length > 0 ? realPersons : simulatedPersons;
+  const metrics = currentPacket?.metrics || (currentTime > 0 ? {
+    total_persons: 1,
+    compliant_count: simIsCompliant ? 1 : 0,
+    non_compliant_count: simIsCompliant ? 0 : 1,
+    phone_count: simHasPhone ? 1 : 0
+  } : { total_persons: 0, compliant_count: 0, non_compliant_count: 0, phone_count: 0 });
   
   // Get displayed stage (hovered or active)
   const displayedStage = hoveredStage !== null ? hoveredStage : activeStage;
@@ -996,45 +1037,130 @@ export default function InteractiveDemo({ demoData }: InteractiveDemoProps) {
                 />
               </div>
             </div>
+          </div>
+        </div>
+        
+        {/* Full-Width Bottom Section - Timeline & Storyboard */}
+        <div className="mt-4 grid grid-cols-12 gap-4">
+          {/* Timeline Visualization - Interactive Event Timeline */}
+          <div className="col-span-8 bg-gray-900 rounded-xl p-4 border border-gray-800">
+            <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
+              <Clock className="w-5 h-5 text-purple-500" />
+              Timeline & Events
+            </h3>
             
-            {/* Events Log */}
-            <div className="bg-gray-900 rounded-xl p-4 border border-gray-800">
-              <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-orange-500" />
-                Events Log
-              </h3>
-              
-              <div className="space-y-2 max-h-32 overflow-y-auto">
-                {demoData?.events
-                  ?.filter(e => e.timestamp_sec <= currentTime)
-                  .map((event, idx) => (
-                    <div 
+            <EventTimeline 
+              events={demoData?.events || []}
+              packets={demoData?.framePackets || []}
+              duration={totalDuration}
+              selectedTime={currentTime}
+              chapters={demoData?.storyboard?.chapters || []}
+              onTimeSelect={setCurrentTime}
+              compact={false}
+            />
+            
+            {/* Events list with clickable rows */}
+            {demoData?.events && demoData.events.length > 0 && (
+              <div className="mt-4 pt-4 border-t border-gray-700">
+                <div className="text-xs text-gray-500 mb-2">Click to view evidence:</div>
+                <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
+                  {demoData.events.map((event, idx) => (
+                    <button
                       key={idx}
-                      className="flex items-center gap-2 p-2 bg-gray-800 rounded text-xs"
+                      onClick={() => setSelectedEventIndex(idx)}
+                      className={`flex items-center gap-2 p-2 rounded text-xs transition-all ${
+                        selectedEventIndex === idx
+                          ? 'bg-blue-900/50 border border-blue-700'
+                          : 'bg-gray-800 hover:bg-gray-700 border border-gray-700'
+                      }`}
                     >
-                      <Clock className="w-3 h-3 text-gray-500" />
+                      <Clock className="w-3 h-3 text-gray-500 flex-shrink-0" />
                       <span className="text-gray-400 font-mono">{formatTime(event.timestamp_sec)}</span>
-                      <span className={`px-1.5 py-0.5 rounded ${
-                        event.event_type.includes('compliant') ? 'bg-green-800 text-green-300' :
+                      <span className={`px-1.5 py-0.5 rounded text-xs font-medium flex-shrink-0 ${
+                        event.event_type === 'compliant_start' ? 'bg-green-800 text-green-300' :
                         event.event_type.includes('phone') ? 'bg-yellow-800 text-yellow-300' :
                         'bg-red-800 text-red-300'
                       }`}>
                         {event.event_type}
                       </span>
-                      <span className="text-gray-500">P{event.person_id}</span>
-                    </div>
+                      {event.evidence_frame_path && (
+                        <Eye className="w-3 h-3 text-blue-400 ml-auto flex-shrink-0" />
+                      )}
+                    </button>
                   ))}
-                  
-                {(!demoData?.events?.length || demoData.events.filter(e => e.timestamp_sec <= currentTime).length === 0) && (
-                  <div className="text-center py-4 text-gray-500 text-xs">
-                    Events will appear as video plays...
-                  </div>
-                )}
+                </div>
               </div>
-            </div>
+            )}
+          </div>
+          
+          {/* Person Analysis - Person Crop Strip */}
+          <div className="col-span-4 bg-gray-900 rounded-xl p-4 border border-gray-800">
+            <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
+              <Move className="w-5 h-5 text-purple-500" />
+              Person Analysis
+            </h3>
+            {persons.length > 0 ? (
+              <PersonCropStrip persons={persons} />
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                <User className="w-10 h-10 mx-auto mb-2 opacity-50" />
+                <p className="text-sm">No persons detected</p>
+                <p className="text-xs mt-1">Press play to start analysis</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
+      
+      {/* FrameViewer Modal - Evidence Frame Viewer */}
+      {selectedEventIndex !== null && demoData?.events?.[selectedEventIndex] && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-gray-900 rounded-xl max-w-4xl w-full max-h-[90vh] flex flex-col border border-gray-700 shadow-2xl">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-700">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-blue-900/50 border border-blue-700 flex items-center justify-center">
+                  <Eye className="w-5 h-5 text-blue-400" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-white">
+                    Evidence Frame
+                  </h2>
+                  <p className="text-xs text-gray-400">
+                    Event: {demoData.events[selectedEventIndex].event_type} | 
+                    Person {demoData.events[selectedEventIndex].person_id} | 
+                    {formatTime(demoData.events[selectedEventIndex].timestamp_sec)}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setSelectedEventIndex(null)}
+                className="w-10 h-10 rounded-lg bg-gray-700 hover:bg-gray-600 flex items-center justify-center transition-colors"
+                title="Close modal"
+              >
+                <X className="w-5 h-5 text-white" />
+              </button>
+            </div>
+            
+            {/* Modal Content */}
+            <div className="flex-1 overflow-auto p-4">
+              {demoData.events[selectedEventIndex].evidence_frame_path ? (
+                <FrameViewer 
+                  src={`/stairs-ai-demo/demo/${demoData.events[selectedEventIndex].evidence_frame_path}`}
+                  alt={`Event frame - ${demoData.events[selectedEventIndex].event_type}`}
+                />
+              ) : (
+                <div className="aspect-video bg-gray-800 rounded-lg flex items-center justify-center">
+                  <div className="text-center text-gray-500">
+                    <AlertTriangle className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                    <p>No evidence frame available for this event</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
