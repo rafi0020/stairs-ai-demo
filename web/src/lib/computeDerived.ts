@@ -152,7 +152,6 @@ export function simulateDebounce(
           stableState = rawState;
           pendingState = null;
           pendingFrameCount = 0;
-          commitEvent = true;
           
           events.push({
             frame_number: packet.frame_number,
